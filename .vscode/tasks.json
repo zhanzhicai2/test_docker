@@ -1,0 +1,149 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Run FastAPI Server",
+			"type": "shell",
+			"command": "/Users/zhanzhicai/Desktop/automation/test_docker/.venv/bin/python",
+			"args": [
+				"-m",
+				"uvicorn",
+				"app.main:app",
+				"--host",
+				"0.0.0.0",
+				"--port",
+				"8000"
+			],
+			"isBackground": true,
+			"problemMatcher": []
+		},
+		{
+			"label": "Run FastAPI Server",
+			"type": "shell",
+			"command": "/Users/zhanzhicai/Desktop/automation/test_docker/.venv/bin/python",
+			"args": [
+				"-m",
+				"uvicorn",
+				"app.main:app",
+				"--host",
+				"0.0.0.0",
+				"--port",
+				"8000"
+			],
+			"isBackground": true,
+			"problemMatcher": []
+		},
+		{
+			"label": "Run FastAPI Server",
+			"type": "shell",
+			"command": "/Users/zhanzhicai/Desktop/automation/test_docker/.venv/bin/python",
+			"args": [
+				"-m",
+				"uvicorn",
+				"app.main:app",
+				"--host",
+				"0.0.0.0",
+				"--port",
+				"8000"
+			],
+			"isBackground": true,
+			"problemMatcher": []
+		},
+		{
+			"label": "Run FastAPI Server",
+			"type": "shell",
+			"command": "/Users/zhanzhicai/Desktop/automation/test_docker/.venv/bin/python",
+			"args": [
+				"-m",
+				"uvicorn",
+				"app.main:app",
+				"--host",
+				"0.0.0.0",
+				"--port",
+				"8000"
+			],
+			"isBackground": true,
+			"problemMatcher": []
+		},
+		{
+			"label": "Run FastAPI Server with HTML5",
+			"type": "shell",
+			"command": "/Users/zhanzhicai/Desktop/automation/test_docker/.venv/bin/python",
+			"args": [
+				"-m",
+				"uvicorn",
+				"app.main:app",
+				"--host",
+				"0.0.0.0",
+				"--port",
+				"8000"
+			],
+			"isBackground": true,
+			"problemMatcher": []
+		},
+		{
+			"label": "Run FastAPI Server with HTML5",
+			"type": "shell",
+			"command": "/Users/zhanzhicai/Desktop/automation/test_docker/.venv/bin/python",
+			"args": [
+				"-m",
+				"uvicorn",
+				"app.main:app",
+				"--host",
+				"0.0.0.0",
+				"--port",
+				"8000"
+			],
+			"isBackground": true,
+			"problemMatcher": []
+		},
+		{
+			"label": "Run FastAPI Server with HTML5",
+			"type": "shell",
+			"command": "/Users/zhanzhicai/Desktop/automation/test_docker/.venv/bin/python",
+			"args": [
+				"-m",
+				"uvicorn",
+				"app.main:app",
+				"--host",
+				"0.0.0.0",
+				"--port",
+				"8000"
+			],
+			"isBackground": true,
+			"problemMatcher": []
+		},
+		{
+			"label": "Run FastAPI Server with Health Check",
+			"type": "shell",
+			"command": "/Users/zhanzhicai/Desktop/automation/test_docker/.venv/bin/python",
+			"args": [
+				"-m",
+				"uvicorn",
+				"app.main:app",
+				"--host",
+				"0.0.0.0",
+				"--port",
+				"8000"
+			],
+			"isBackground": true,
+			"problemMatcher": []
+		},
+		{
+			"label": "Run FastAPI Server with Health Check",
+			"type": "shell",
+			"command": "/Users/zhanzhicai/Desktop/automation/test_docker/.venv/bin/python",
+			"args": [
+				"-m",
+				"uvicorn",
+				"app.main:app",
+				"--host",
+				"0.0.0.0",
+				"--port",
+				"8000"
+			],
+			"isBackground": true,
+			"problemMatcher": []
+		}
+	]
+}
