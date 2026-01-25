@@ -12,6 +12,16 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
+          MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
@@ -25,7 +35,15 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-
+    
+    - name: Wait for MySQL to be ready
+      run: |
+        sudo apt-get update && sudo apt-get install -y mysql-client
+          while ! mysqladmin ping -h"127.0.0.1" -P 3306 -u"root" -p"${{ secrets.MYSQL_ROOT_PASSWORD }}" --silent; do
+            sleep 1
+          done
+          echo "MySQL is ready!"
+        
     - name: Run tests
       run: |
         pytest -p no:warnings
