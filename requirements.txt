@@ -5,3 +5,4 @@ pymysql
 pytest
 httpx   
 python-dotenv
+jinja2
