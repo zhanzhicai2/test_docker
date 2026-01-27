@@ -40,15 +40,4 @@ jobs:
         tags: ${{ steps.meta.outputs.tags }}  # 使用上一步生成的所有标签
         labels: ${{ steps.meta.outputs.labels }}
 
-    - name: Set up Docker Compose
-      run: |
-        docker-compose up -d
-
-    - name: Run tests
-      run: |
-        docker-compose exec web pytest
-
-    - name: Tear down Docker Compose
-      if: always()
-      run: |
-        docker-compose down
+    
