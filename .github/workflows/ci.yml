@@ -62,7 +62,7 @@ jobs:
         tags: |
           type=raw,value=latest,enable={{is_default_branch}}  # 默认分支推送时打上latest
           type=ref,event=tag                                 # 标签触发时，使用标签名（如v1.0.0）
-          type=sha,enable=true,prefix=,format=short                        # 始终包含Git commit SHA
+          type=sha,enable=true,prefix=                        # 始终包含Git commit SHA
         enable: true
 
     - name: Build and push Docker image
