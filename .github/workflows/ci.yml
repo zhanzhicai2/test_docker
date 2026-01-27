@@ -1,31 +1,73 @@
+# name: CI Pipeline
+
+# on:
+#   push:
+#     branches:
+#       - main
+#   pull_request:
+#     branches:
+#       - main
+
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#     - name: Checkout code
+#       uses: actions/checkout@v3
+
+#     - name: Log in to Docker Hub
+#       uses: docker/login-action@v2
+#       with:
+#         username: ${{ secrets.DOCKER_USERNAME }}
+#         password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+#     - name: Build and tag Docker image
+#       run: |
+#         docker build -t ${{ secrets.DOCKER_USERNAME }}/github_docker:latest .
+
+#     - name: Push Docker image to Docker Hub
+#       run: |
+#         docker push ${{ secrets.DOCKER_USERNAME }}/github_docker:latest
+
+
 name: CI Pipeline
 
 on:
   push:
-    branches:
-      - main
+    branches: [ "main" ]
+    tags: [ "v*.*.*" ]  # 匹配类似 v1.0.0 的标签
   pull_request:
-    branches:
-      - main
+    branches: [ "main" ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4  # 更新到v4
 
     - name: Log in to Docker Hub
-      uses: docker/login-action@v2
+      uses: docker/login-action@v3  # 更新到v3
       with:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
-    - name: Build and tag Docker image
-      run: |
-        docker build -t ${{ secrets.DOCKER_USERNAME }}/github_docker:latest .
+    # 🏷️ 核心步骤：自动生成多种标签
+    - name: Extract Docker metadata
+      id: meta
+      uses: docker/metadata-action@v5  # 使用元数据Action
+      with:
+        images: ${{ secrets.DOCKER_USERNAME }}/github_docker
+        tags: |
+          type=raw,value=latest,enable=#{is_default_branch}  # 默认分支推送时打上latest
+          type=ref,event=tag                                 # 标签触发时，使用标签名（如v1.0.0）
+          type=sha,enable=true,prefix=                        # 始终包含Git commit SHA
 
-    - name: Push Docker image to Docker Hub
-      run: |
-        docker push ${{ secrets.DOCKER_USERNAME }}/github_docker:latest
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v5  # 使用Buildx，支持多平台构建
+      with:
+        context: .
+        push: true
+        tags: ${{ steps.meta.outputs.tags }}  # 使用上一步生成的所有标签
+        labels: ${{ steps.meta.outputs.labels }}
