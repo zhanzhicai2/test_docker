@@ -40,4 +40,19 @@ jobs:
         tags: ${{ steps.meta.outputs.tags }}  # 使用上一步生成的所有标签
         labels: ${{ steps.meta.outputs.labels }}
 
-    
+  deploy-to-ecs:
+      needs: build # 修改为正确的任务名称
+      runs-on: ubuntu-latest
+      steps:
+        - name: Deploy to ECS via SSH
+          uses: appleboy/ssh-action@v1.0.3
+          with:
+            host: ${{ secrets.ECS_HOST }}       # ECS公网IP
+            username: ${{ secrets.ECS_USER }}   # 登录用户，如 root 或 ecs-user
+            key: ${{ secrets.ECS_SSH_KEY }}     # 用于SSH认证的私钥
+            script: |
+              cd /home/admin/fastapi-app # 进入您存放 docker-compose.yml 的目录
+              docker-compose pull      # 拉取服务的最新镜像
+              docker-compose up -d     # 重新创建并启动容器
+              docker image prune -f    # [可选] 清理旧的镜像，释放磁盘空间
+
