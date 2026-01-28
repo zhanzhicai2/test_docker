@@ -34,7 +34,7 @@
 version: '3.8'
 services:
   web:
-    image: crpi-k1l4xuewozf56i16.cn-shenzhen.personal.cr.aliyuncs.com/zhanzhicai/test_docker:${IMAGE_TAG:-latest}  # 替换为你的ACR镜像地址
+    image: crpi-k1l4xuewozf56i16.cn-shenzhen.personal.cr.aliyuncs.com/zhanzhicai/test_docker:${IMAGE_TAG}  # 替换为你的ACR镜像地址
     pull_policy: always
     container_name: test_docker
     ports:
