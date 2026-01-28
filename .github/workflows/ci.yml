@@ -44,6 +44,9 @@ jobs:
       needs: build # 修改为正确的任务名称
       runs-on: ubuntu-latest
       steps:
+        - name: Checkout code
+          uses: actions/checkout@v4  # 更新到v4
+
         - name: Deploy to ECS via SSH
           uses: appleboy/ssh-action@v1.0.3
           with:
@@ -52,10 +55,11 @@ jobs:
             key: ${{ secrets.ECS_SSH_KEY }}     # 用于SSH认证的私钥
             script: |
               cd /home/admin/fastapi-app # 进入您存放 docker-compose.yml 的目录
-              export IMAGE_TAG=${{ github.sha }}
+              export IMAGE_TAG=$(git rev-parse --short HEAD)  # 获取当前Git提交的短SHA作为IMAGE_TAG
+              echo "使用的IMAGE_TAG: $IMAGE_TAG"
               docker compose pull    # 拉取服务的最新镜像
-              docker compose up -d --pull always --force-recreate     # 重新创建并启动容器
+              docker compose up -d --force-recreate     # 重新创建并启动容器
               docker compose images web
-              docker compose exec web env | grep IMAGE_TAG || echo "检查完毕"
+              docker compose exec web env | grep IMAGE_TAG || echo "IMAGE_TAG环境变量未设置,检查完毕"
               docker image prune -f    # [可选] 清理旧的镜像，释放磁盘空间
 
