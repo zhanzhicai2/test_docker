@@ -53,8 +53,7 @@ jobs:
             script: |
               cd /home/admin/fastapi-app # 进入您存放 docker-compose.yml 的目录
               export IMAGE_TAG=${{ github.sha }}  # 获取当前Git提交的短SHA作为IMAGE_TAG
-              export IMAGE_TAG=${IMAGE_TAG:0:7}  # 截取前7位作为标签
-              echo "使用的IMAGE_TAG: $IMAGE_TAG"
+              echo "Using IMAGE_TAG: $IMAGE_TAG"
               docker compose pull    # 拉取服务的最新镜像
               docker compose up -d --force-recreate     # 重新创建并启动容器
               docker compose images web
