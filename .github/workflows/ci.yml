@@ -52,7 +52,10 @@ jobs:
             key: ${{ secrets.ECS_SSH_KEY }}     # 用于SSH认证的私钥
             script: |
               cd /home/admin/fastapi-app # 进入您存放 docker-compose.yml 的目录
+              export IMAGE_TAG=${{ github.sha }}
               docker compose pull    # 拉取服务的最新镜像
               docker compose up -d --pull always --force-recreate     # 重新创建并启动容器
+              docker compose images web
+              docker compose exec web env | grep IMAGE_TAG || echo "检查完毕"
               docker image prune -f    # [可选] 清理旧的镜像，释放磁盘空间
 
