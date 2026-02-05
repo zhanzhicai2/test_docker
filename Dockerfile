@@ -16,5 +16,9 @@ EXPOSE 8000
 # Define environment variable
 ENV PYTHONUNBUFFERED=1
 
+# Add wait-for-it script to wait for MySQL to be ready
+COPY wait-for-it.sh /wait-for-it.sh
+RUN chmod +x /wait-for-it.sh
+
 # Run the application
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["/wait-for-it.sh", "mysql:3306", "--", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
